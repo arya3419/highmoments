@@ -3,59 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HighMoments | Public Joy</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;800&display=swap" rel="stylesheet">
+    <title>HighMoments | Travel Your Soul</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;800&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        :root { --primary: #6366f1; --secondary: #ec4899; --bg: #fdfcfb; }
-        body { font-family: 'Outfit', sans-serif; background: var(--bg); margin: 0; padding-bottom: 50px; }
-        header { background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%); padding: 60px 20px; text-align: center; color: white; clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%); }
-        .container { max-width: 600px; margin: -50px auto 0; width: 90%; }
-        .glass-panel { background: white; padding: 30px; border-radius: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        textarea { width: 100%; height: 100px; border: 2px solid #f1f5f9; border-radius: 15px; padding: 15px; font-size: 1rem; outline: none; font-family: inherit; box-sizing: border-box; }
-        button { width: 100%; background: linear-gradient(to right, var(--primary), var(--secondary)); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 800; cursor: pointer; margin-top: 15px; }
-        .moment-card { background: white; padding: 20px; border-radius: 15px; margin-top: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-left: 5px solid var(--secondary); animation: fadeIn 0.5s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; } }
+        :root { --glass: rgba(255, 255, 255, 0.12); }
+        
+        body, html { 
+            margin: 0; padding: 0; min-height: 100%; 
+            font-family: 'Outfit', sans-serif;
+            background: #000; color: white;
+        }
+
+        /* Full Page Scenery Background */
+        .bg-scenery {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), 
+                        url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        header {
+            height: 50vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        h1 { 
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 10vw, 6rem); margin: 0; 
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .tagline { font-size: 0.9rem; letter-spacing: 5px; text-transform: uppercase; opacity: 0.8; margin-bottom: 10px; }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px 100px; }
+
+        /* Immersive Input Box */
+        .input-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 40px; border-radius: 40px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            margin-top: -60px;
+        }
+
+        textarea {
+            width: 100%; height: 120px; background: transparent;
+            border: none; color: white; font-size: 1.4rem;
+            outline: none; resize: none; font-family: inherit;
+        }
+
+        .publish-btn {
+            background: white; color: black; border: none;
+            padding: 15px 40px; border-radius: 50px;
+            font-weight: 800; cursor: pointer; float: right;
+            transition: 0.3s; font-size: 1rem; margin-top: 10px;
+        }
+
+        .publish-btn:hover { transform: scale(1.05); background: #6366f1; color: white; }
+
+        /* Decorated Story Feed */
+        .feed-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            gap: 25px; margin-top: 80px; 
+        }
+
+        .moment-card {
+            background: var(--glass); backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 25px; border-radius: 25px;
+            transition: 0.4s; border-top: 4px solid #ec4899;
+        }
+
+        .moment-card:hover { transform: translateY(-10px); background: rgba(255,255,255,0.2); }
+
+        .moment-card p { font-size: 1.1rem; line-height: 1.5; margin-bottom: 15px; font-weight: 300; }
+
+        .card-footer { font-size: 0.7rem; color: #10b981; font-weight: 800; letter-spacing: 1px; }
+
+        footer { text-align: center; padding: 50px; opacity: 0.4; font-size: 0.7rem; letter-spacing: 2px; }
     </style>
 </head>
 <body>
-    <header><h1>HighMoments</h1><p>Stored Forever • Public Domain</p></header>
-    <div class="container">
-        <div class="glass-panel">
-            <textarea id="momentInput" placeholder="What's a happy movement from today?"></textarea>
-            <button onclick="publish()">SAVE TO PUBLIC VAULT</button>
-        </div>
-        <div id="feed"></div>
+
+<div class="bg-scenery"></div>
+
+<header>
+    <div class="tagline">Global Connection</div>
+    <h1>HighMoments</h1>
+</header>
+
+<div class="container">
+    <div class="input-card">
+        <textarea id="momentInput" placeholder="Describe your movement..."></textarea>
+        <button class="publish-btn" onclick="publish()">POST JOURNEY</button>
+        <div style="clear:both;"></div>
     </div>
 
-    <script>
-        // These are your unique keys from your Supabase dashboard
-        const supabase = lib.createClient('https://qbkyjuygpcusvxnjlgyr.supabase.co', 'sb_publishable_RbRR4Pn2afNtc0Uaa2CsNw_Ordgv_7T');
+    <div id="feed" class="feed-grid">
+        </div>
+</div>
 
-        async function load() {
-            const { data } = await supabase.from('moments').select('*').order('id', { ascending: false });
-            if (data) {
-                const feed = document.getElementById('feed');
-                feed.innerHTML = '';
-                data.forEach(m => {
-                    const card = document.createElement('div');
-                    card.className = 'moment-card';
-                    card.innerHTML = `<p>${m.text}</p><small style="color:#94a3b8">Public Domain Record</small>`;
-                    feed.appendChild(card);
-                });
-            }
-        }
+<footer>PUBLIC DOMAIN PROJECT • NO RIGHTS RESERVED</footer>
 
-        async function publish() {
-            const val = document.getElementById('momentInput').value;
-            if (!val.trim()) return;
-            const { error } = await supabase.from('moments').insert([{ text: val }]);
-            if (!error) {
-                document.getElementById('momentInput').value = '';
-                load();
-            } else { alert("Make sure you created the 'moments' table in Supabase!"); }
+<script>
+    // Your verified Supabase connection
+    const supabase = lib.createClient('https://qbkyjuygpcusvxnjlgyr.supabase.co', 'sb_publishable_RbRR4Pn2afNtc0Uaa2CsNw_Ordgv_7T');
+
+    async function load() {
+        const { data, error } = await supabase.from('moments').select('*').order('id', { ascending: false });
+        if (data) {
+            const feed = document.getElementById('feed');
+            feed.innerHTML = '';
+            data.forEach(m => {
+                const card = document.createElement('div');
+                card.className = 'moment-card';
+                card.innerHTML = `<p>${m.text}</p><div class="card-footer">PUBLIC RECORD</div>`;
+                feed.appendChild(card);
+            });
         }
-        load();
-    </script>
+    }
+
+    async function publish() {
+        const input = document.getElementById('momentInput');
+        const val = input.value;
+        if (!val.trim()) return;
+        
+        const { error } = await supabase.from('moments').insert([{ text: val }]);
+        if (!error) {
+            input.value = '';
+            load();
+        } else {
+            alert("Database Error: Check if your 'moments' table exists in Supabase.");
+        }
+    }
+    load();
+</script>
+
 </body>
 </html>
