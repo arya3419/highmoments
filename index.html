@@ -8,34 +8,25 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root { --pink: #ff007f; --violet: #7000ff; --soft-bg: #f8fafc; }
-        
-        body { 
-            margin: 0; padding: 0; background-color: var(--soft-bg); 
-            color: #0f172a; font-family: 'Plus Jakarta Sans', sans-serif;
-            -webkit-font-smoothing: antialiased;
-        }
+        body { margin: 0; padding: 0; background-color: var(--soft-bg); color: #0f172a; font-family: 'Plus Jakarta Sans', sans-serif; }
 
-        /* 7 Wonders Horizontal Scroll - Fixed with reliable keywords */
+        /* Wonders Section */
         .wonders-section {
             width: 100%; overflow-x: auto; white-space: nowrap;
-            padding: 30px 20px; scroll-behavior: smooth;
-            background: white; border-bottom: 1px solid #e2e8f0;
+            padding: 30px 20px; background: white; border-bottom: 1px solid #e2e8f0;
         }
         .wonders-section::-webkit-scrollbar { display: none; }
-
         .wonder-item {
-            display: inline-block; width: 300px; height: 200px;
+            display: inline-block; width: 320px; height: 220px;
             margin-right: 20px; border-radius: 24px;
             overflow: hidden; position: relative;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: 0.3s;
         }
-        .wonder-item:hover { transform: scale(1.02); }
-        .wonder-item img { width: 100%; height: 100%; object-fit: cover; }
+        .wonder-item img { width: 100%; height: 100%; object-fit: cover; background: #eee; }
         .wonder-label {
             position: absolute; bottom: 0; left: 0; right: 0;
-            padding: 15px; background: linear-gradient(transparent, rgba(0,0,0,0.7));
-            color: white; font-size: 0.8rem; font-weight: 600;
+            padding: 15px; background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white; font-size: 0.85rem; font-weight: 700;
         }
 
         header { padding: 60px 20px 40px; text-align: center; }
@@ -43,94 +34,70 @@
             font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 8vw, 4.5rem); margin: 0; 
             background: linear-gradient(to right, var(--pink), var(--violet));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            letter-spacing: -1px;
         }
 
         .container { max-width: 1100px; margin: 0 auto; padding: 0 20px 100px; }
-
-        /* Professional Input Area */
         .input-wrapper {
             background: white; padding: 30px; border-radius: 32px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.04);
-            border: 1px solid #f1f5f9; margin-bottom: 60px;
-            display: flex; flex-direction: column; gap: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.04); border: 1px solid #f1f5f9; margin-bottom: 60px;
         }
-        textarea {
-            width: 100%; border: none; font-size: 1.25rem;
-            outline: none; resize: none; font-family: inherit;
-            color: #1e293b; min-height: 80px;
-        }
-        .btn-row { display: flex; justify-content: flex-end; }
+        textarea { width: 100%; border: none; font-size: 1.3rem; outline: none; resize: none; font-family: inherit; min-height: 80px; }
         .publish-btn {
             background: linear-gradient(135deg, var(--pink), var(--violet));
-            color: white; border: none; padding: 16px 40px; border-radius: 100px;
-            font-weight: 700; cursor: pointer; transition: 0.3s;
-            box-shadow: 0 10px 20px rgba(255, 0, 127, 0.2);
+            color: white; border: none; padding: 16px 45px; border-radius: 100px;
+            font-weight: 700; cursor: pointer; float: right; transition: 0.3s;
         }
-        .publish-btn:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(255, 0, 127, 0.3); }
-
-        /* Story Grid */
         .feed-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
         .moment-card {
             background: white; padding: 30px; border-radius: 28px;
-            border: 1px solid #f1f5f9; transition: 0.3s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-            animation: slideUp 0.5s ease forwards;
+            border: 1px solid #f1f5f9; box-shadow: 0 4px 6px rgba(0,0,0,0.02);
         }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .moment-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
-        .moment-card p { font-size: 1.15rem; line-height: 1.6; margin: 0 0 20px; font-weight: 400; color: #334155; }
-        .card-footer { 
-            display: flex; align-items: center; gap: 10px;
-            font-size: 0.75rem; font-weight: 700; color: var(--pink); text-transform: uppercase;
-        }
-        .dot { width: 6px; height: 6px; background: #e2e8f0; border-radius: 50%; }
+        .card-footer { font-size: 0.75rem; font-weight: 700; color: var(--pink); text-transform: uppercase; }
     </style>
 </head>
 <body>
 
 <div class="wonders-section">
     <div class="wonder-item">
-        <img src="https://source.unsplash.com/featured/?tajmahal,india" alt="Taj Mahal">
+        <img src="https://images.unsplash.com/photo-1564507592333-c60657451dd7?auto=format&fit=crop&w=600&q=80" alt="Taj Mahal">
         <div class="wonder-label">Taj Mahal, India</div>
     </div>
     <div class="wonder-item">
-        <img src="https://source.unsplash.com/featured/?greatwall,china" alt="Great Wall">
+        <img src="https://images.unsplash.com/photo-1508804185872-d7badad00f7d?auto=format&fit=crop&w=600&q=80" alt="Great Wall">
         <div class="wonder-label">Great Wall, China</div>
     </div>
     <div class="wonder-item">
-        <img src="https://source.unsplash.com/featured/?colosseum,rome" alt="Colosseum">
+        <img src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=600&q=80" alt="Colosseum">
         <div class="wonder-label">The Colosseum, Italy</div>
     </div>
     <div class="wonder-item">
-        <img src="https://source.unsplash.com/featured/?petra,jordan" alt="Petra">
+        <img src="https://images.unsplash.com/photo-1548115184-bc6544d06a58?auto=format&fit=crop&w=600&q=80" alt="Petra">
         <div class="wonder-label">Petra, Jordan</div>
     </div>
     <div class="wonder-item">
-        <img src="https://source.unsplash.com/featured/?machupicchu" alt="Machu Picchu">
+        <img src="https://images.unsplash.com/photo-1526392060635-9d6019884377?auto=format&fit=crop&w=600&q=80" alt="Machu Picchu">
         <div class="wonder-label">Machu Picchu, Peru</div>
     </div>
     <div class="wonder-item">
-        <img src="https://source.unsplash.com/featured/?pyramid,mexico" alt="Chichen Itza">
+        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80" alt="Chichen Itza">
         <div class="wonder-label">Chichen Itza, Mexico</div>
     </div>
     <div class="wonder-item">
-        <img src="https://source.unsplash.com/featured/?statue,rio" alt="Christ the Redeemer">
+        <img src="https://images.unsplash.com/photo-1591533512217-0630b9609f67?auto=format&fit=crop&w=600&q=80" alt="Christ the Redeemer">
         <div class="wonder-label">Christ the Redeemer, Brazil</div>
     </div>
 </div>
 
 <header>
     <h1>HighMoments</h1>
-    <p style="color: #64748b; font-weight: 500; margin-top: 10px;">Capturing the wonders of your daily journey</p>
+    <p style="color: #64748b; font-weight: 500;">Capturing global wonders daily</p>
 </header>
 
 <div class="container">
     <div class="input-wrapper">
         <textarea id="momentInput" placeholder="What's a wonder you saw today?"></textarea>
-        <div class="btn-row">
-            <button class="publish-btn" onclick="publish()">Publish Moment</button>
-        </div>
+        <button class="publish-btn" onclick="publish()">Publish Moment</button>
+        <div style="clear:both;"></div>
     </div>
     <div id="feed" class="feed-grid"></div>
 </div>
@@ -146,7 +113,7 @@
             data.forEach(m => {
                 const card = document.createElement('div');
                 card.className = 'moment-card';
-                card.innerHTML = `<p>${m.text}</p><div class="card-footer"><span>Live Archive</span><div class="dot"></div><span>Verified</span></div>`;
+                card.innerHTML = `<p>${m.text}</p><div class="card-footer">VERIFIED ARCHIVE</div>`;
                 feed.appendChild(card);
             });
         }
