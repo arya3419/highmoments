@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HighMoments | Travel Your Soul</title>
+    <title>HighMoments | Pink Soul</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;800&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root { 
-            --pink: #ec4899; 
-            --violet: #8b5cf6; 
+            --pink: #ff007f; 
+            --violet: #7000ff; 
             --glass: rgba(255, 255, 255, 0.1); 
         }
         
@@ -19,12 +19,12 @@
             background: #000; color: white;
         }
 
-        /* Full Page Scenery Background */
+        /* Full Page Scenery Background (Pink Sunset) */
         .bg-scenery {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
-            background: linear-gradient(rgba(139, 92, 246, 0.3), rgba(236, 72, 153, 0.3)), 
-                        url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920&q=80');
+            background: linear-gradient(rgba(112, 0, 255, 0.4), rgba(255, 0, 127, 0.4)), 
+                        url('https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -42,42 +42,42 @@
         h1 { 
             font-family: 'Playfair Display', serif;
             font-size: clamp(3.5rem, 12vw, 7rem); margin: 0; 
-            background: linear-gradient(to right, #f472b6, #a78bfa);
+            background: linear-gradient(to right, #ff85c0, #c084fc);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 10px 20px rgba(236, 72, 153, 0.3));
+            filter: drop-shadow(0 0 15px rgba(255, 0, 127, 0.6));
         }
 
-        .tagline { font-size: 0.8rem; letter-spacing: 6px; text-transform: uppercase; color: #fbcfe8; margin-bottom: 10px; font-weight: 800; }
+        .tagline { font-size: 0.8rem; letter-spacing: 6px; text-transform: uppercase; color: #ff85c0; margin-bottom: 10px; font-weight: 800; }
 
         .container { max-width: 900px; margin: 0 auto; padding: 0 20px 100px; }
 
         /* Pink & Violet Glass Input */
         .input-card {
-            background: rgba(139, 92, 246, 0.15);
-            backdrop-filter: blur(30px);
-            border: 2px solid rgba(236, 72, 153, 0.3);
+            background: rgba(112, 0, 255, 0.2);
+            backdrop-filter: blur(35px);
+            border: 2px solid #ff007f;
             padding: 40px; border-radius: 40px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            box-shadow: 0 0 40px rgba(255, 0, 127, 0.3);
             margin-top: -40px;
         }
 
         textarea {
             width: 100%; height: 100px; background: transparent;
-            border: none; color: white; font-size: 1.4rem;
+            border: none; color: white; font-size: 1.5rem;
             outline: none; resize: none; font-family: inherit;
         }
 
         .publish-btn {
-            background: linear-gradient(45deg, var(--pink), var(--violet));
+            background: linear-gradient(45deg, #ff007f, #7000ff);
             color: white; border: none;
             padding: 18px 50px; border-radius: 50px;
             font-weight: 800; cursor: pointer; float: right;
             transition: 0.3s; font-size: 1.1rem;
-            box-shadow: 0 10px 20px rgba(236, 72, 153, 0.4);
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.5);
         }
 
-        .publish-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(139, 92, 246, 0.5); }
+        .publish-btn:hover { transform: translateY(-3px) scale(1.05); }
 
         /* Decorated Story Feed */
         .feed-grid { 
@@ -92,20 +92,20 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 30px; border-radius: 30px;
             transition: 0.4s;
-            border-bottom: 5px solid var(--violet);
+            border-bottom: 6px solid #7000ff;
         }
 
         .moment-card:hover { 
             transform: scale(1.03); 
-            border-bottom: 5px solid var(--pink);
-            background: rgba(255, 255, 255, 0.1);
+            border-bottom: 6px solid #ff007f;
+            background: rgba(255, 255, 255, 0.15);
         }
 
-        .moment-card p { font-size: 1.2rem; line-height: 1.6; margin-bottom: 15px; font-weight: 300; }
+        .moment-card p { font-size: 1.3rem; line-height: 1.6; margin-bottom: 15px; font-weight: 300; }
 
-        .card-footer { font-size: 0.7rem; color: var(--pink); font-weight: 800; letter-spacing: 2px; }
+        .card-footer { font-size: 0.7rem; color: #ff007f; font-weight: 800; letter-spacing: 2px; }
 
-        footer { text-align: center; padding: 50px; opacity: 0.6; font-size: 0.7rem; color: var(--violet); }
+        footer { text-align: center; padding: 50px; opacity: 0.8; font-size: 0.7rem; color: #ff85c0; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -113,7 +113,7 @@
 <div class="bg-scenery"></div>
 
 <header>
-    <div class="tagline">A Soul's Journey</div>
+    <div class="tagline">The World is Yours</div>
     <h1>HighMoments</h1>
 </header>
 
