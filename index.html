@@ -38,8 +38,8 @@
                 const feed = document.getElementById('feed');
                 feed.innerHTML = '';
                 data.forEach(m => {
-                    card.className = 'moment-card';
                     const card = document.createElement('div');
+                    card.className = 'moment-card';
                     card.innerHTML = `<p>${m.text}</p><small style="color:#94a3b8">Public Domain Record</small>`;
                     feed.appendChild(card);
                 });
